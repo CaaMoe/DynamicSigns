@@ -1,0 +1,146 @@
+###########################
+#  动态告示牌的模板文件
+###########################
+
+# 动态告示牌有效的可视距离
+# 当观察者超过此距离之后动态告示牌将不会更新内容
+# 默认值: 10
+visualRange: 10
+
+# 动态告示牌看向我的有效距离
+# 当观察者超过此距离之后动态告示牌将不会主动看向玩家
+# 当此值为负数时，告示牌将不会面向玩家
+# 仅对非挂靠告示牌有效
+# 默认值: 5
+lookMeRange: 5
+
+# 设置动态告示牌的内容
+# 节点数据格式为 LIST
+# delay 为内容停留时长，单位 tick
+# rotation 为告示牌朝向，接受 0 ~ 15 16个值，
+#      分别表示朝向南、朝向西南偏南、朝向西南、朝向西南偏西、朝向西、朝向西北偏西、朝向西北、朝向西北偏北、
+#             朝向北、朝向东北偏北、朝向东北、朝向东北偏东、朝向东、朝向东南偏东、朝向东南和朝向东南偏南。
+#      当此值越界时则不处理动态告示牌的朝向。默认值为 -1
+# glowingText 为字体是否发光，高版本有效。默认 false
+# content 为牌子内容，必须四行
+dynamicContents:
+  - delay: 5
+    glowingText: true
+    rotation: 0
+    content:
+      - '§8TPS: %server_tps_1_colored%'
+      - '§a§l<>'
+      - '§a§l<>'
+      - ''
+  - delay: 5
+    glowingText: true
+    rotation: 1
+    content:
+      - '§8TPS: %server_tps_1_colored%'
+      - '§a§l<->'
+      - '§a§l<->'
+      - ''
+  - delay: 5
+    glowingText: true
+    rotation: 2
+    content:
+      - '§8TPS: %server_tps_1_colored%'
+      - '§a§l<-->'
+      - '§a§l<-->'
+      - ''
+  - delay: 5
+    glowingText: true
+    rotation: 3
+    content:
+      - '§8TPS: %server_tps_1_colored%'
+      - '§a§l<--->'
+      - '§a§l<--->'
+      - ''
+  - delay: 5
+    glowingText: true
+    rotation: 3
+    content:
+      - '§8TPS: %server_tps_1_colored%'
+      - '§a§l<---->'
+      - '§a§l<---->'
+      - ''
+  - delay: 5
+    glowingText: true
+    rotation: 2
+    content:
+      - '§8TPS: %server_tps_1_colored%'
+      - '§a§l<-- -->'
+      - '§a§l<-- -->'
+      - ''
+  - delay: 5
+    glowingText: true
+    rotation: 1
+    content:
+      - '§8TPS: %server_tps_1_colored%'
+      - '§a§l<--  -->'
+      - '§a§l<--  -->'
+      - ''
+  - delay: 5
+    glowingText: true
+    rotation: 0
+    content:
+      - '§8TPS: %server_tps_1_colored%'
+      - '§a§l<--   -->'
+      - '§a§l<--   -->'
+      - ''
+  - delay: 5
+    glowingText: true
+    rotation: 0
+    content:
+      - '§8TPS: %server_tps_1_colored%'
+      - '§a§l<--    -->'
+      - '§a§l<--    -->'
+      - ''
+  - delay: 5
+    glowingText: true
+    rotation: 1
+    content:
+      - '§8TPS: %server_tps_1_colored%'
+      - '§a§l<--     -->'
+      - '§a§l<--     -->'
+      - ''
+  - delay: 5
+    glowingText: true
+    rotation: 2
+    content:
+      - '§8TPS: %server_tps_1_colored%'
+      - '§a§l<--      -->'
+      - '§a§l<--      -->'
+      - ''
+  - delay: 5
+    glowingText: true
+    rotation: 3
+    content:
+      - '§8TPS: %server_tps_1_colored%'
+      - '§a§l<--       -->'
+      - '§a§l<--       -->'
+      - ''
+  - delay: 5
+    glowingText: true
+    rotation: 3
+    content:
+      - '§8TPS: %server_tps_1_colored%'
+      - '§a§l<--        -->'
+      - '§a§l<--        -->'
+      - ''
+  - delay: 5
+    glowingText: true
+    rotation: 2
+    content:
+      - '§8TPS: %server_tps_1_colored%'
+      - '§a§l<--         -->'
+      - '§a§l<--         -->'
+      - ''
+  - delay: 5
+    glowingText: true
+    rotation: 1
+    content:
+      - '§8TPS: %server_tps_1_colored%'
+      - '§a§l<--          -->'
+      - '§a§l<--          -->'
+      - ''

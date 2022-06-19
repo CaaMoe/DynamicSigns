@@ -1,0 +1,45 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id 'java'
+}
+
+group = 'moe.caa.bukkit'
+version = '1.0-BETA'
+
+repositories {
+    maven { url "https://maven.aliyun.com/repository/public" }
+    maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
+    maven { url "https://hub.spigotmc.org/nexus/content/groups/public/" }
+    maven { url "https://repo.codemc.io/repository/nms" }
+    maven { url "https://repo.dmulloy2.net/repository/public" }
+    maven { url "https://repo.extendedclip.com/content/repositories/placeholderapi" }
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
+    compileOnly 'org.spigotmc:spigot-api:1.12-R0.1-SNAPSHOT'
+    compileOnly 'com.comphenix.protocol:ProtocolLib:4.7.0'
+    compileOnly 'me.clip:placeholderapi:2.11.1'
+}
+
+def targetJavaVersion = 8
+
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+processResources {
+    setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+
+    def props = new Properties()
+    props.put("version", version)
+    filter(tokens: props, ReplaceTokens)
+}

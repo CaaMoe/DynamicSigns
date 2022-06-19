@@ -1,0 +1,12 @@
+name: DynamicSigns
+version: '@version@'
+author: CaaMoe
+main: moe.caa.bukkit.dynamicsigns.main.DynamicSigns
+api-version: 1.13
+depend:
+  - ProtocolLib
+  - PlaceholderAPI
+commands:
+  DynamicSigns:
+    aliases:
+      - ds

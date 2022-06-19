@@ -1,0 +1,12 @@
+###########################
+#  动态告示牌的配置文件
+###########################
+
+message:
+  noPerms: '§c你没有足够的权限执行这条指令'
+  worldNotFound: '§c世界 §e%world% §c不存在'
+  dynamicNotFound: '§c动态文件 §e%dynamic% §c不存在'
+  digitalParseException: '§c输入的不是一个有效的数字，请检查后重新输入'
+  paramNotEnough: '§c参数不对哦，添加动态木牌请执行 §e/ds <world> <x> <y> <z> <dynamic_path>'
+  added: '§a已在位置§e [%world%, %x%, %y%, %z%] §a处应用动态木牌，动态模板为 §e%dynamic% §a，如果需要移除木牌，请摧毁它并等待几秒钟'
+  notSign: '§c位置§e [%world%, %x%, %y%, %z%] §c不是一个有效的牌子方块'
