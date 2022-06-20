@@ -3,10 +3,20 @@
 ###########################
 
 message:
+  reloaded: '§a插件已重载完毕'
   noPerms: '§c你没有足够的权限执行这条指令'
-  worldNotFound: '§c世界 §e%world% §c不存在'
+  notIsPlayer: '§c此功能需要由玩家执行'
+  notIsSign: '§c请面向一个木牌才能执行这条指令！'
+  noDigital: '§c所面向的木牌 §e [%world%, %x%, %y%, %z%] §c没有绑定任何动态效果.'
+  removeDigital: '§a已移除位于 §e[%world%, %x%, %y%, %z%] §a的木牌的动态效果.'
   dynamicNotFound: '§c动态文件 §e%dynamic% §c不存在'
-  digitalParseException: '§c输入的不是一个有效的数字，请检查后重新输入'
-  paramNotEnough: '§c参数不对哦，添加动态木牌请执行 §e/ds <world> <x> <y> <z> <dynamic_path>'
-  added: '§a已在位置§e [%world%, %x%, %y%, %z%] §a处应用动态木牌，动态模板为 §e%dynamic% §a，如果需要移除木牌，请摧毁它并等待几秒钟'
-  notSign: '§c位置§e [%world%, %x%, %y%, %z%] §c不是一个有效的牌子方块'
+  resetEqual: '§c老的动态效果和新的动态效果是同一个动态效果，请检查指令拼写是否有误 §e%dynamic%'
+  repeatSet: '§c所面向的木牌 §e[%world%, %x%, %y%, %z%] §c已有名为 §e%dynamic% §c的动态效果，如需强行设置请使用 §ereset §c指令'
+  setDigital: '§a已在位置 §e[%world%, %x%, %y%, %z%] §a处应用动态木牌，动态模板为 §e%dynamic% §a，如果需要移除木牌，请摧毁它并等待几秒钟或是执行摧毁指令'
+  resetBreak: '§c所面向的木牌 §e[%world%, %x%, %y%, %z%] §c没有任何动态效果，请使用普通设置指令'
+  resetDigital: '§a已在位置 §e[%world%, %x%, %y%, %z%] §a处重新应用动态木牌，老的动态模板为 §e%old_dynamic% §a, 新的动态模板为 §e%new_dynamic% §a, 如果需要移除木牌，请摧毁它并等待几秒钟或是执行摧毁指令'
+  help: |
+    §b/ds destroy §8 - §e摧毁一个动态木牌效果
+    §b/ds set <dynamic> §8 - §e应用一个动态木牌效果
+    §b/ds reset <dynamic> §8 - §e重新应用一个动态木牌效果
+    §b/ds reload §8 - §e重新加载插件

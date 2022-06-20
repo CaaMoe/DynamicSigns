@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,16 +40,14 @@ public final class DynamicSigns extends JavaPlugin {
     @SneakyThrows
     public void onEnable() {
         initPlaceholderHandler();
-        signPacketHandler.init();
+        initCommandHandler();
         reload();
         readData();
-        CommandHandler commandHandler = new CommandHandler(this);
-        PluginCommand command = getCommand(getDescription().getName());
-        command.setExecutor(commandHandler);
-        command.setTabCompleter(commandHandler);
+        signPacketHandler.init();
         new SignDynamicHandler(this).register();
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, this::saveData, 20 * 60 * 5, 20 * 60 * 5);
     }
+
 
     private void initPlaceholderHandler() {
         final Plugin placeholderAPI = getServer().getPluginManager().getPlugin("PlaceholderAPI");
@@ -66,6 +65,26 @@ public final class DynamicSigns extends JavaPlugin {
         }
     }
 
+    private void initCommandHandler() {
+        PluginCommand command = getCommand(getDescription().getName());
+        CommandHandler executor = new CommandHandler(this);
+        command.setExecutor(executor);
+        command.setTabCompleter(executor);
+    }
+
+    private void write(Path filePath, InputStream inputStream) throws IOException {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            byte[] buf = new byte[1024];
+            int num;
+            while ((num = inputStream.read(buf)) != -1) {
+                baos.write(buf, 0, num);
+            }
+            baos.flush();
+
+            Files.write(filePath, baos.toByteArray());
+        }
+    }
+
     public void reload() throws IOException {
         saveDefaultConfig();
         reloadConfig();
@@ -75,15 +94,8 @@ public final class DynamicSigns extends JavaPlugin {
             Files.createDirectory(dynamicFolder.toPath());
             final File file = new File(dynamicFolder, "dynamic_template.yml");
             Files.createFile(file.toPath());
-            try (InputStream resource = getResource("dynamic_template.yml"); ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-                byte[] buf = new byte[1024];
-                int num = 0;
-                while ((num = resource.read(buf)) != -1) {
-                    baos.write(buf, 0, num);
-                }
-                baos.flush();
-
-                Files.write(file.toPath(), baos.toByteArray());
+            try (InputStream resource = getResource("dynamic_template.yml");) {
+                write(file.toPath(), resource);
             }
         }
 
@@ -108,6 +120,18 @@ public final class DynamicSigns extends JavaPlugin {
         getLogger().info(dynamicSignsMap.size() + " dynamic files are loaded.");
 
         this.dynamicSignsMap = dynamicSignsMap;
+
+        Map<Location, DynamicConfig> newDataEntry = new ConcurrentHashMap<>();
+        for (Map.Entry<Location, DynamicConfig> entry : this.dataEntry.entrySet()) {
+            final DynamicConfig dc = dynamicSignsMap.get(entry.getValue().getPath());
+            if (dc == null) {
+                getLogger().info("Remove the dynamic sign at " + entry.getKey());
+                continue;
+            }
+            newDataEntry.put(entry.getKey(), dc);
+        }
+
+        this.dataEntry = newDataEntry;
     }
 
     public void readData() {

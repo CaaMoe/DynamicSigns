@@ -14,6 +14,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -34,6 +35,10 @@ public class SignPacketHandler {
 
     public static boolean isSign(Material material) {
         return material.name().toLowerCase().contains("sign");
+    }
+
+    public static boolean isSign(Block block) {
+        return block.getState() instanceof Sign;
     }
 
     public static boolean isWall(Material material) {
@@ -89,7 +94,7 @@ public class SignPacketHandler {
         }
         final Block block = location.getBlock();
         if (block == null) return;
-        if (!isSign(block.getType())) return;
+        if (!isSign(block)) return;
         if (isWall(block.getType())) return;
         if (direction < 0) return;
         if (direction > 15) return;
@@ -118,7 +123,7 @@ public class SignPacketHandler {
         }
         final Block block = location.getBlock();
         if (block == null) return;
-        if (!isSign(block.getType())) return;
+        if (!isSign(block)) return;
         PacketContainer packet = new PacketContainer(PacketType.Play.Server.TILE_ENTITY_DATA);
         BlockPosition blockPosition = new BlockPosition(block.getX(), block.getY(), block.getZ());
 

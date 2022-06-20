@@ -32,7 +32,7 @@ public class SignDynamicHandler {
         tickNum++;
         if (tickNum % 100 == 0) {
             plugin.getDataEntry().forEach((l, e) -> {
-                if (l.getBlock() == null || !SignPacketHandler.isSign(l.getBlock().getType())) {
+                if (l.getBlock() == null || !SignPacketHandler.isSign(l.getBlock())) {
                     plugin.getLogger().info("Remove the dynamic sign at " + l);
                     plugin.getDataEntry().remove(l);
                 }
