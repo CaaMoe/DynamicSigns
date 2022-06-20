@@ -6,10 +6,14 @@ import moe.caa.bukkit.dynamicsigns.command.CommandHandler;
 import moe.caa.bukkit.dynamicsigns.config.DynamicConfig;
 import moe.caa.bukkit.dynamicsigns.handler.SignDynamicHandler;
 import moe.caa.bukkit.dynamicsigns.handler.SignPacketHandler;
+import moe.caa.bukkit.dynamicsigns.handler.placelholder.EmptyPlaceholderHandler;
+import moe.caa.bukkit.dynamicsigns.handler.placelholder.PlaceholderHandler;
+import moe.caa.bukkit.dynamicsigns.handler.placelholder.UsePlaceholderAPIHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.ByteArrayOutputStream;
@@ -29,10 +33,12 @@ public final class DynamicSigns extends JavaPlugin {
     private final File dataFile = new File(getDataFolder(), "data.yml");
     private Map<Location, DynamicConfig> dataEntry = new ConcurrentHashMap<>();
     private Map<String, DynamicConfig> dynamicSignsMap = new ConcurrentHashMap<>();
+    private PlaceholderHandler placeholderHandler;
 
     @Override
     @SneakyThrows
     public void onEnable() {
+        initPlaceholderHandler();
         signPacketHandler.init();
         reload();
         readData();
@@ -42,6 +48,22 @@ public final class DynamicSigns extends JavaPlugin {
         command.setTabCompleter(commandHandler);
         new SignDynamicHandler(this).register();
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, this::saveData, 20 * 60 * 5, 20 * 60 * 5);
+    }
+
+    private void initPlaceholderHandler() {
+        final Plugin placeholderAPI = getServer().getPluginManager().getPlugin("PlaceholderAPI");
+        if (placeholderAPI != null) {
+            try {
+                placeholderHandler = new UsePlaceholderAPIHandler();
+                getLogger().info("Using " + placeholderAPI.getDescription().getName() + " " + placeholderAPI.getDescription().getVersion());
+            } catch (Exception e) {
+                e.printStackTrace();
+                getLogger().severe("Cannot use " + placeholderAPI.getDescription().getName() + " " + placeholderAPI.getDescription().getVersion());
+            }
+        }
+        if (placeholderAPI == null) {
+            placeholderHandler = new EmptyPlaceholderHandler();
+        }
     }
 
     public void reload() throws IOException {

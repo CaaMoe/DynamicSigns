@@ -8,14 +8,13 @@ import com.comphenix.protocol.wrappers.BlockPosition;
 import com.comphenix.protocol.wrappers.WrappedBlockData;
 import com.comphenix.protocol.wrappers.nbt.NbtCompound;
 import com.comphenix.protocol.wrappers.nbt.NbtFactory;
-import me.clip.placeholderapi.PlaceholderAPI;
+import moe.caa.bukkit.dynamicsigns.main.DynamicSigns;
 import moe.caa.bukkit.dynamicsigns.main.UnsupportedServer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -26,10 +25,10 @@ import java.util.List;
 import java.util.Set;
 
 public class SignPacketHandler {
-    private final Plugin plugin;
+    private final DynamicSigns plugin;
     private Object tileEntityDataTwoObject;
 
-    public SignPacketHandler(Plugin plugin) {
+    public SignPacketHandler(DynamicSigns plugin) {
         this.plugin = plugin;
     }
 
@@ -147,7 +146,7 @@ public class SignPacketHandler {
     }
 
     public String getText(String message, Player player) {
-        message = PlaceholderAPI.setPlaceholders(player, message);
+        message = plugin.getPlaceholderHandler().setPlaceholders(message, player);
 
         try {
             new JSONParser().parse(message);
