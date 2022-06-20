@@ -38,7 +38,7 @@ public class SignPacketHandler {
     }
 
     public static boolean isSign(Block block) {
-        return block.getState() instanceof Sign;
+        return isSign(block.getType());
     }
 
     public static boolean isWall(Material material) {
